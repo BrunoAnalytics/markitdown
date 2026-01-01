@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    # NOTE: This job only verifies that the Docker image builds successfully
+    # and does not push it to a registry or otherwise use the built image.
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ github.repository }}:$(date +%s)
